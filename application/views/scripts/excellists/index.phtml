@@ -1,0 +1,42 @@
+<?php
+// SPDX-License-Identifier: AGPL-3.0-or-later
+/** @var \Icinga\Web\View $this */
+/** @var \Icinga\Web\Widget\Tabs $tabs */
+/** @var \Icinga\Repository\RepositoryQuery $lists */
+?>
+<div class="controls"><?= $tabs ?></div>
+<div class="content">
+    <p><?= $this->qlink(
+            $this->translate('New'),
+            'manufaktura_elfov/excellists/create',
+            null,
+            [
+                'class' => 'button-link',
+                'icon' => 'plus',
+                'data-icinga-modal' => true,
+                'data-no-icinga-ajax' => true
+            ]
+        ) ?></p>
+    <table data-base-target="_next" class="common-table">
+        <tbody>
+        <?php foreach ($lists as $list): ?>
+            <tr data-base-target="_self" data-icinga-modal data-no-icinga-ajax href="<?=
+            $this->href('manufaktura_elfov/excellists/edit', ['uuid' => $list->uuid])
+            ?>">
+                <td><?= $this->escape($list->display_name) ?></td>
+                <td><?= $this->qlink(
+                        null,
+                        'manufaktura_elfov/excellists/remove',
+                        ['uuid' => $list->uuid],
+                        [
+                            'class' => 'button-link',
+                            'icon' => 'trash',
+                            'data-icinga-modal' => true,
+                            'data-no-icinga-ajax' => true
+                        ]
+                    ) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

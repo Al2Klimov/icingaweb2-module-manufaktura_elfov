@@ -7,3 +7,8 @@ $this->provideConfigTab('config', [
     'url' => 'config',
     'label' => $this->translate('Settings')
 ]);
+
+$this->provideConfigTab('excellists', [
+    'url' => 'excellists',
+    'label' => $this->translate('Excel lists')
+]);
