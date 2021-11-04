@@ -12,7 +12,7 @@ class ExcellistsController extends Controller
     {
         $this->assertPermission('config/modules');
 
-        $this->view->lists = $this->getRepo()->select(['uuid', 'display_name'])->order('display_name');
+        $this->view->lists = ExcelLists::create()->select(['uuid', 'display_name'])->order('display_name');
         $this->view->tabs = $this->Module()->getConfigTabs()->activate('excellists');
     }
 
@@ -49,16 +49,8 @@ class ExcellistsController extends Controller
         $this->view->title = $this->translate('Remove');
     }
 
-    private function getRepo(): ExcelLists
-    {
-        $ds = $this->Config('excel_lists');
-        $ds->getConfigObject()->setKeyColumn('uuid');
-
-        return new ExcelLists($ds);
-    }
-
     private function newForm(): ExcelListForm
     {
-        return (new ExcelListForm)->setRepository($this->getRepo())->setRedirectUrl('manufaktura_elfov/excellists');
+        return (new ExcelListForm)->setRepository(ExcelLists::create())->setRedirectUrl('manufaktura_elfov/excellists');
     }
 }
