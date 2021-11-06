@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 namespace Icinga\Module\Manufaktura_elfov\Clicommands;
 
+use DateTime;
 use Icinga\Cli\Command;
 use Icinga\Data\Db\DbConnection;
 use Icinga\Module\Manufaktura_elfov\Db;
@@ -13,11 +14,17 @@ class CronCommand extends Command
 {
     public function dailyAction(): void
     {
+        $now = (new DateTime)->format(DateTime::ISO8601);
+        $sources = [];
+
         /** @var PolitPrisoner[] $pps */
         $pps = [];
 
         foreach (ExcelLists::create()->select()->order('display_name') as $el) {
-            foreach ((new ExcelList($el->uuid, $el->url, $el->name_column, $el->born_column))->fetchAll() as $pp) {
+            $el = new ExcelList($el->uuid, $el->url, $el->name_column, $el->born_column);
+            $sources[] = $el->getUuid();
+
+            foreach ($el->fetchAll() as $pp) {
                 $pps[] = $pp;
             }
         }
@@ -30,9 +37,21 @@ class CronCommand extends Command
             }
         }
 
-        Db::tx(function (DbConnection $db) use ($pps, &$fields) {
+        Db::tx(function (DbConnection $db) use ($now, $sources, $pps, &$fields) {
             /** @var \PDO $pdo */
             $pdo = $db->getDbAdapter()->getConnection();
+
+            $stmt = $pdo->prepare(
+                'INSERT INTO polit_prisoner_source(id, last_import) VALUES (:id, :last_import)'
+                . ' ON CONFLICT ON CONSTRAINT polit_prisoner_source_pk'
+                . ' DO UPDATE SET last_import=EXCLUDED.last_import'
+            );
+
+            foreach ($sources as $id) {
+                $stmt->execute(['id' => $id, 'last_import' => $now]);
+            }
+
+            $stmt = null;
 
             if (!empty($fields)) {
                 $stmt = $pdo->prepare(
@@ -51,16 +70,17 @@ class CronCommand extends Command
             }
 
             $stmt = $pdo->prepare(
-                'INSERT INTO polit_prisoner(name, born, source) VALUES (:name, :born, :source)'
+                'INSERT INTO polit_prisoner(name, born, source, last_seen) VALUES (:name, :born, :source, :last_seen)'
                 . ' ON CONFLICT ON CONSTRAINT polit_prisoner_uk_name'
-                . ' DO UPDATE SET born=EXCLUDED.born, source=EXCLUDED.source RETURNING id'
+                . ' DO UPDATE SET born=EXCLUDED.born, source=EXCLUDED.source, last_seen=EXCLUDED.last_seen RETURNING id'
             );
 
             foreach ($pps as $pp) {
                 $stmt->execute([
                     'name' => $pp->name,
                     'born' => $pp->born === null ? null : $pp->born->format('Y-m-d'),
-                    'source' => $pp->source
+                    'source' => $pp->source,
+                    'last_seen' => $now
                 ]);
 
                 $pp->id = $stmt->fetchColumn();
@@ -69,8 +89,9 @@ class CronCommand extends Command
             $stmt = null;
 
             $stmt = $pdo->prepare(
-                'INSERT INTO polit_prisoner_attr(polit_prisoner, field, value) VALUES (:polit_prisoner, :field, :value)'
-                . ' ON CONFLICT ON CONSTRAINT polit_prisoner_attr_pk DO UPDATE SET value=EXCLUDED.value'
+                'INSERT INTO polit_prisoner_attr(polit_prisoner, field, value, last_seen)'
+                . ' VALUES (:polit_prisoner, :field, :value, :last_seen) ON CONFLICT ON CONSTRAINT'
+                . ' polit_prisoner_attr_pk DO UPDATE SET value=EXCLUDED.value, last_seen=EXCLUDED.last_seen'
             );
 
             foreach ($pps as $pp) {
@@ -78,7 +99,8 @@ class CronCommand extends Command
                     $stmt->execute([
                         'polit_prisoner' => $pp->id,
                         'field' => $fields[$field],
-                        'value' => $value
+                        'value' => $value,
+                        'last_seen' => $now
                     ]);
                 }
             }
