@@ -91,7 +91,7 @@ EOF
                     $pp->source = $this->getUuid();
 
                     if ($bornIndex !== null && isset($row[$bornIndex])) {
-                        if (preg_match('~^(\d+ \w+ \d+)~', $row[$bornIndex])) {
+                        if (preg_match('~^(\d+ \w+ \d+)~', $row[$bornIndex], $matches)) {
                             $pp->born = new DateTime($matches[1]);
                         }
                     }
