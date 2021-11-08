@@ -7,6 +7,7 @@ use Icinga\Application\Config;
 use Icinga\Data\Db\DbConnection;
 use Icinga\Data\ResourceFactory;
 use Icinga\Exception\ConfigurationError;
+use PDO;
 use PDOException;
 
 class Db
@@ -24,7 +25,7 @@ class Db
 
             $db = ResourceFactory::create($resource);
 
-            /** @var \PDO $pdo */
+            /** @var PDO $pdo */
             $pdo = $db->getDbAdapter()->getConnection();
 
             $pdo->exec('SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL SERIALIZABLE');
@@ -33,6 +34,11 @@ class Db
         }
 
         return self::$db;
+    }
+
+    public static function getPdo(): PDO
+    {
+        return self::get()->getDbAdapter()->getConnection();
     }
 
     public static function tx(callable $do): void

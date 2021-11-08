@@ -1,0 +1,27 @@
+<?php
+// SPDX-License-Identifier: AGPL-3.0-or-later
+/** @var \Icinga\Web\View $this */
+/** @var \Icinga\Web\Widget\Tabs $tabs */
+/** @var stdClass[] $rows */
+?>
+<div class="controls"><?= $tabs ?></div>
+<div class="content">
+    <table data-base-target="_next" class="common-table">
+        <thead>
+        <tr>
+            <th><?= $this->escape($this->translate('Month')) ?></th>
+            <th><?= $this->escape($this->translate('People born')) ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($rows as $row): ?>
+            <tr data-base-target="_next" href="<?=
+            $this->href('manufaktura_elfov/politprisoners/bybirthmonth', ['month' => $row->born_month])
+            ?>">
+                <td><?= $this->escape($row->month_name) ?></td>
+                <td><?= $this->escape($row->amount) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

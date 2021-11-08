@@ -12,3 +12,14 @@ $this->provideConfigTab('excellists', [
     'url' => 'excellists',
     'label' => $this->translate('Excel lists')
 ]);
+
+$section = $this->menuSection(N_('Polit. prisoners'), [
+    'icon' => 'users',
+    'priority' => -1
+]);
+
+$section->add(N_('By birthday'), [
+    'icon' => 'calendar',
+    'url' => 'manufaktura_elfov/politprisoners/bybirthday',
+    'priority' => 10
+]);

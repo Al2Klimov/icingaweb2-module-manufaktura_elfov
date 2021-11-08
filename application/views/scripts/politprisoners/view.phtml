@@ -1,0 +1,40 @@
+<?php
+// SPDX-License-Identifier: AGPL-3.0-or-later
+/** @var \Icinga\Web\View $this */
+/** @var \Icinga\Web\Widget\Tabs $tabs */
+/** @var stdClass $politPrisoner */
+/** @var string[] $excelLists */
+/** @var stdClass[] $fields */
+?>
+<div class="controls"><?= $tabs ?></div>
+<div class="content">
+    <table class="name-value-list common-table">
+        <tbody>
+        <tr>
+            <td><?= $this->escape($this->translate('Name')) ?></td>
+            <td<?= ($politPrisoner->vanished ? ' class="vanished"' : '') ?>><?=
+                $this->escape($politPrisoner->name)
+                ?></td>
+        </tr>
+        <tr>
+            <td><?= $this->escape($this->translate('Born')) ?></td>
+            <td><?= $politPrisoner->born === null
+                    ? '?' : $this->escape(strftime('%x', (new DateTime($politPrisoner->born))->getTimestamp())) ?></td>
+        </tr>
+        <tr>
+            <td><?= $this->escape($this->translate('List')) ?></td>
+            <?php if (isset($excelLists[$politPrisoner->source])): ?>
+                <td><?= $this->escape($excelLists[$politPrisoner->source]) ?></td>
+            <?php else: ?>
+                <td class="vanished"><?= $this->escape($politPrisoner->source) ?></td>
+            <?php endif; ?>
+        </tr>
+        <?php foreach ($fields as $field): ?>
+            <tr>
+                <td<?= ($field->vanished ? ' class="vanished"' : '') ?>><?= $this->escape($field->name) ?></td>
+                <td><?= $this->escape($field->value) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
