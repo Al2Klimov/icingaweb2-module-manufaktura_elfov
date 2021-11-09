@@ -13,6 +13,11 @@ $this->provideConfigTab('excellists', [
     'label' => $this->translate('Excel lists')
 ]);
 
+$this->provideConfigTab('infolinks', [
+    'url' => 'infolinks',
+    'label' => $this->translate('Info. links')
+]);
+
 $section = $this->menuSection(N_('Polit. prisoners'), [
     'icon' => 'users',
     'priority' => -1

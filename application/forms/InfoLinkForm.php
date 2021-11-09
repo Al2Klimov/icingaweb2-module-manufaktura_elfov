@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 namespace Icinga\Module\Manufaktura_elfov\Forms;
 
-class ExcelListForm extends RepoForm
+class InfoLinkForm extends RepoForm
 {
     protected function createInsertElements(array $formData): void
     {
@@ -15,15 +15,6 @@ class ExcelListForm extends RepoForm
                 'validator' => 'regex',
                 'options' => ['pattern' => '~^https?://~']
             ]]
-        ]);
-
-        $this->addElement('text', 'name_column', [
-            'label' => $this->translate('Name column'),
-            'required' => true
-        ]);
-
-        $this->addElement('text', 'born_column', [
-            'label' => $this->translate('Born column')
         ]);
     }
 }

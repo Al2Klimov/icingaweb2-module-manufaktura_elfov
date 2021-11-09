@@ -8,7 +8,7 @@
 <div class="content">
     <p><?= $this->qlink(
             $this->translate('New'),
-            'manufaktura_elfov/excellists/create',
+            'manufaktura_elfov/infolinks/create',
             null,
             [
                 'class' => 'button-link',
@@ -21,12 +21,12 @@
         <tbody>
         <?php foreach ($items as $item): ?>
             <tr data-base-target="_self" data-icinga-modal data-no-icinga-ajax href="<?=
-            $this->href('manufaktura_elfov/excellists/edit', ['uuid' => $item->uuid])
+            $this->href('manufaktura_elfov/infolinks/edit', ['uuid' => $item->uuid])
             ?>">
                 <td><?= $this->escape($item->display_name) ?></td>
                 <td><?= $this->qlink(
                         null,
-                        'manufaktura_elfov/excellists/remove',
+                        'manufaktura_elfov/infolinks/remove',
                         ['uuid' => $item->uuid],
                         [
                             'class' => 'button-link',
