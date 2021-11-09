@@ -18,8 +18,14 @@ $section = $this->menuSection(N_('Polit. prisoners'), [
     'priority' => -1
 ]);
 
+$section->add(N_('All'), [
+    'icon' => 'th-list',
+    'url' => 'manufaktura_elfov/politprisoners/all',
+    'priority' => 10
+]);
+
 $section->add(N_('By birthday'), [
     'icon' => 'calendar',
     'url' => 'manufaktura_elfov/politprisoners/bybirthday',
-    'priority' => 10
+    'priority' => 20
 ]);

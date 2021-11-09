@@ -13,6 +13,21 @@ use PDO;
 
 class PolitprisonersController extends Controller
 {
+    public function allAction(): void
+    {
+        $this->view->excelLists = ExcelLists::create()->select(['uuid', 'display_name'])->fetchPairs();
+
+        $this->view->rows = $query = Db::getPdo()->prepare(
+            'SELECT id, name, born, source,'
+            . ' last_seen<>(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source) vanished'
+            . ' FROM polit_prisoner pp ORDER BY name'
+        );
+
+        $query->execute();
+        $query->setFetchMode(PDO::FETCH_OBJ);
+        $this->addTabByBirthday($this->addTabAll($this->mkTabs()))->activate('all');
+    }
+
     public function bybirthdayAction(): void
     {
         $query = Db::getPdo()->prepare(
@@ -27,7 +42,7 @@ class PolitprisonersController extends Controller
             $row->month_name = $this->getMonthName($row->born_month);
         }
 
-        $this->addTabByBirthday($this->mkTabs())->activate('bybirthday');
+        $this->addTabByBirthday($this->addTabAll($this->mkTabs()))->activate('bybirthday');
     }
 
     public function bybirthmonthAction(): void
@@ -97,10 +112,14 @@ class PolitprisonersController extends Controller
 
         $tabs = $this->mkTabs();
 
-        if ($this->getParam('from') === 'month') {
-            $this->addTabByMonth(
-                $tabs, $politPrisoner->born === null ? 0 : (int)(new DateTime($politPrisoner->born))->format('n')
-            );
+        switch ($this->getParam('from')) {
+            case 'all':
+                $this->addTabAll($tabs);
+                break;
+            case 'month':
+                $this->addTabByMonth(
+                    $tabs, $politPrisoner->born === null ? 0 : (int)(new DateTime($politPrisoner->born))->format('n')
+                );
         }
 
         $tabs->add('polit_prisoner', [
@@ -146,6 +165,15 @@ class PolitprisonersController extends Controller
     private function mkTabs(): Tabs
     {
         return $this->view->tabs = new Tabs;
+    }
+
+    private function addTabAll(Tabs $tabs): Tabs
+    {
+        return $tabs->add('all', [
+            'title' => $this->translate('All'),
+            'icon' => 'th-list',
+            'url' => 'manufaktura_elfov/politprisoners/all'
+        ]);
     }
 
     private function addTabByBirthday(Tabs $tabs): Tabs

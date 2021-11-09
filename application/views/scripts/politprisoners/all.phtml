@@ -1,0 +1,35 @@
+<?php
+// SPDX-License-Identifier: AGPL-3.0-or-later
+/** @var \Icinga\Web\View $this */
+/** @var \Icinga\Web\Widget\Tabs $tabs */
+/** @var stdClass[] $rows */
+/** @var string[] $excelLists */
+?>
+<div class="controls"><?= $tabs ?></div>
+<div class="content">
+    <table data-base-target="_next" class="common-table">
+        <thead>
+        <tr>
+            <th><?= $this->escape($this->translate('Name')) ?></th>
+            <th><?= $this->escape($this->translate('Born')) ?></th>
+            <th><?= $this->escape($this->translate('List')) ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($rows as $row): ?>
+            <tr data-base-target="_next" href="<?=
+            $this->href('manufaktura_elfov/politprisoners/view', ['from' => 'all', 'id' => $row->id])
+            ?>">
+                <td<?= ($row->vanished ? ' class="vanished"' : '') ?>><?= $this->escape($row->name) ?></td>
+                <td><?= $row->born === null
+                        ? '?' : $this->escape(strftime('%x', (new DateTime($row->born))->getTimestamp())) ?></td>
+                <?php if (isset($excelLists[$row->source])): ?>
+                    <td><?= $this->escape($excelLists[$row->source]) ?></td>
+                <?php else: ?>
+                    <td class="vanished"><?= $this->escape($row->source) ?></td>
+                <?php endif; ?>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
