@@ -6,6 +6,7 @@ use DateTime;
 use Icinga\Exception\NotFoundError;
 use Icinga\Module\Manufaktura_elfov\Db;
 use Icinga\Module\Manufaktura_elfov\ExcelLists;
+use Icinga\Module\Manufaktura_elfov\InfoLinks;
 use Icinga\Web\Controller;
 use Icinga\Web\Url;
 use Icinga\Web\Widget\Tabs;
@@ -99,6 +100,25 @@ class PolitprisonersController extends Controller
 
         $this->view->excelLists = ExcelLists::create()->select(['uuid', 'display_name'])
             ->where('uuid', $politPrisoner->source)->fetchPairs();
+
+        $this->view->infoLinks = $infoLinks = InfoLinks::create()->select(['display_name', 'url'])->fetchAll();
+
+        foreach ($infoLinks as $infoLink) {
+            $infoLink->url = preg_replace_callback(
+                '~\$([^$]*)\$~',
+                function (array $matches) use ($politPrisoner) {
+                    switch ($matches[1]) {
+                        case '':
+                            return '$';
+                        case 'name':
+                            return rawurlencode($politPrisoner->name);
+                        default:
+                            return $matches[0];
+                    }
+                },
+                $infoLink->url
+            );
+        }
 
         $this->view->fields = $query = Db::getPdo()->prepare(
             'SELECT (SELECT name FROM polit_prisoner_field WHERE id=ppa.field) AS name, value,'

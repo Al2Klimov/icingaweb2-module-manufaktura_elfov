@@ -4,6 +4,7 @@
 /** @var \Icinga\Web\Widget\Tabs $tabs */
 /** @var stdClass $politPrisoner */
 /** @var string[] $excelLists */
+/** @var stdClass[] $infoLinks */
 /** @var stdClass[] $fields */
 ?>
 <div class="controls"><?= $tabs ?></div>
@@ -29,6 +30,28 @@
                 <td class="vanished"><?= $this->escape($politPrisoner->source) ?></td>
             <?php endif; ?>
         </tr>
+        <?php if (!empty($infoLinks)): ?>
+            <tr>
+                <td><?= $this->escape($this->translate('Details')) ?></td>
+                <td>
+                    <?php if (count($infoLinks) > 1): ?>
+                        <ul>
+                            <?php foreach ($infoLinks as $infoLink): ?>
+                                <li><a target="_blank" href="<?= $this->escape($infoLink->url) ?>"><?=
+                                        $this->escape($infoLink->display_name)
+                                        ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <?php foreach ($infoLinks as $infoLink): ?>
+                            <a class="action-link" target="_blank" href="<?= $this->escape($infoLink->url) ?>"><?=
+                                $this->escape($infoLink->display_name)
+                                ?></a>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endif; ?>
         <?php foreach ($fields as $field): ?>
             <tr>
                 <td<?= ($field->vanished ? ' class="vanished"' : '') ?>><?= $this->escape($field->name) ?></td>
