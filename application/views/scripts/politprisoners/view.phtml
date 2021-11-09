@@ -30,6 +30,22 @@
                 <td class="vanished"><?= $this->escape($politPrisoner->source) ?></td>
             <?php endif; ?>
         </tr>
+        <tr>
+            <td><?= $this->escape($this->translate('Awareness score')) ?></td>
+            <td><?= $this->escape(
+                    $politPrisoner->awareness === null ? '?' : "$politPrisoner->awareness / 10"
+                ) ?>&emsp;<?= $this->qlink(
+                    null,
+                    'manufaktura_elfov/politprisoners/awareness',
+                    ['politprisoner' => $politPrisoner->id],
+                    [
+                        'class' => 'button-link',
+                        'icon' => 'edit',
+                        'data-icinga-modal' => true,
+                        'data-no-icinga-ajax' => true
+                    ]
+                ) ?></td>
+        </tr>
         <?php if (!empty($infoLinks)): ?>
             <tr>
                 <td><?= $this->escape($this->translate('Details')) ?></td>

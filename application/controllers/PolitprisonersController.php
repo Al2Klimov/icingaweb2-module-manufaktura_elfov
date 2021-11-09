@@ -6,6 +6,7 @@ use DateTime;
 use Icinga\Exception\NotFoundError;
 use Icinga\Module\Manufaktura_elfov\Db;
 use Icinga\Module\Manufaktura_elfov\ExcelLists;
+use Icinga\Module\Manufaktura_elfov\Forms\AwarenessForm;
 use Icinga\Module\Manufaktura_elfov\InfoLinks;
 use Icinga\Web\Controller;
 use Icinga\Web\Url;
@@ -19,7 +20,7 @@ class PolitprisonersController extends Controller
         $this->view->excelLists = ExcelLists::create()->select(['uuid', 'display_name'])->fetchPairs();
 
         $this->view->rows = $query = Db::getPdo()->prepare(
-            'SELECT id, name, born, source,'
+            'SELECT id, name, born, source, awareness,'
             . ' last_seen<>(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source) vanished'
             . ' FROM polit_prisoner pp ORDER BY name'
         );
@@ -63,7 +64,7 @@ class PolitprisonersController extends Controller
         $this->view->excelLists = ExcelLists::create()->select(['uuid', 'display_name'])->fetchPairs();
 
         $this->view->rows = $query = Db::getPdo()->prepare(
-            'SELECT id, born, name, source,'
+            'SELECT id, born, name, source, awareness,'
             . ' last_seen<>(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source) vanished'
             . ' FROM polit_prisoner pp WHERE born_month=:born_month ORDER BY born_dom, name'
         );
@@ -84,7 +85,7 @@ class PolitprisonersController extends Controller
         $id = (int)$id;
 
         $query = Db::getPdo()->prepare(
-            'SELECT name, born, source,'
+            'SELECT name, born, source, awareness,'
             . ' last_seen<>(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source) vanished'
             . ' FROM polit_prisoner pp WHERE id=:id'
         );
@@ -97,6 +98,8 @@ class PolitprisonersController extends Controller
         if ($politPrisoner === false) {
             throw new NotFoundError('');
         }
+
+        $politPrisoner->id = $id;
 
         $this->view->excelLists = ExcelLists::create()->select(['uuid', 'display_name'])
             ->where('uuid', $politPrisoner->source)->fetchPairs();
@@ -148,6 +151,35 @@ class PolitprisonersController extends Controller
             'url' => Url::fromRequest(),
             'active' => true
         ]);
+    }
+
+    public function awarenessAction(): void
+    {
+        $politPrisoner = $this->params->getRequired('politprisoner');
+
+        if (preg_match('~\D~', $politPrisoner)) {
+            throw new NotFoundError('');
+        }
+
+        $politPrisoner = (int)$politPrisoner;
+        $query = Db::getPdo()->prepare('SELECT awareness FROM polit_prisoner WHERE id=:id');
+
+        $query->execute(['id' => $politPrisoner]);
+
+        $awareness = $query->fetch(PDO::FETCH_COLUMN);
+
+        if ($awareness === false) {
+            throw new NotFoundError('');
+        }
+
+        $this->view->form = $form = (new AwarenessForm)
+            ->setPolitPrisoner($politPrisoner)
+            ->setAwarenessScore($awareness)
+            ->setRedirectUrl(Url::fromPath('manufaktura_elfov/politprisoners/view', ['id' => $politPrisoner]));
+
+        $form->handleRequest();
+
+        $this->view->title = $this->translate('Awareness score');
     }
 
     private function getMonthName(int $month): string
