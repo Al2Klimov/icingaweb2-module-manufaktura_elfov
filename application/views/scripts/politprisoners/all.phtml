@@ -1,5 +1,8 @@
 <?php
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+use Icinga\Web\Url;
+
 /** @var \Icinga\Web\View $this */
 /** @var \Icinga\Web\Widget\Tabs $tabs */
 /** @var stdClass[] $rows */
@@ -7,6 +10,15 @@
 ?>
 <div class="controls"><?= $tabs ?></div>
 <div class="content">
+    <p><?= $this->qlink(
+            $this->translate('Random'),
+            Url::fromRequest()->setAnchor('random'),
+            null,
+            [
+                'class' => 'button-link random-link',
+                'icon' => 'help'
+            ]
+        ) ?></p>
     <table data-base-target="_next" class="common-table">
         <thead>
         <tr>
