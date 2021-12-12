@@ -1,0 +1,214 @@
+# manufaktura_elfov.
+# Copyright (C) 2021 TEAM NAME
+# This file is distributed under the same license as Manufaktura_elfov Module.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Manufaktura_elfov Module (0.0.0)\n"
+"Report-Msgid-Bugs-To: ISSUE TRACKER\n"
+"POT-Creation-Date: 2021-11-10 11:50+0000\n"
+"PO-Revision-Date: 2021-12-12 17:49+0100\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Basepath: .\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: ../../../../application/forms/AwarenessForm.php:38
+msgid "1 = John Doe, 10 = Alexey Navalny"
+msgstr "1 = Вася Пупкин, 10 = Алексей Навальный"
+
+#: ../../../../application/forms/RepoForm.php:17
+msgid "Add"
+msgstr "Добавить"
+
+#: ../../../../configuration.php:26
+#: ../../../../application/controllers/PolitprisonersController.php:225
+msgid "All"
+msgstr "Все"
+
+#: ../../../../application/controllers/PolitprisonersController.php:195
+msgid "April"
+msgstr "Апрель"
+
+#: ../../../../application/controllers/PolitprisonersController.php:203
+msgid "August"
+msgstr "Август"
+
+#: ../../../../application/controllers/PolitprisonersController.php:182
+#: ../../../../application/views/scripts/politprisoners/all.phtml:28
+#: ../../../../application/views/scripts/politprisoners/bybirthmonth.phtml:16
+#: ../../../../application/views/scripts/politprisoners/view.phtml:34
+msgid "Awareness score"
+msgstr "Оценка узнаваемости"
+
+#: ../../../../application/views/scripts/politprisoners/all.phtml:26
+#: ../../../../application/views/scripts/politprisoners/bybirthmonth.phtml:13
+#: ../../../../application/views/scripts/politprisoners/view.phtml:21
+msgid "Born"
+msgstr "Дата рождения"
+
+#: ../../../../application/forms/ExcelListForm.php:26
+msgid "Born column"
+msgstr "Столбец с датой рождения"
+
+#: ../../../../configuration.php:32
+#: ../../../../application/controllers/PolitprisonersController.php:234
+msgid "By birthday"
+msgstr "По дате рождения"
+
+#: ../../../../application/forms/RepoForm.php:22
+msgid "Confirm Removal"
+msgstr "Подтвердить удаление"
+
+#: ../../../../application/forms/BackendForm.php:28
+msgid "Database"
+msgstr "База данных"
+
+#: ../../../../application/controllers/PolitprisonersController.php:211
+msgid "December"
+msgstr "Декабрь"
+
+#: ../../../../application/views/scripts/politprisoners/view.phtml:51
+msgid "Details"
+msgstr "Подробности"
+
+#: ../../../../library/Manufaktura_elfov/CrudController.php:43
+msgid "Edit"
+msgstr "Изменить"
+
+#: ../../../../application/forms/RepoForm.php:32
+#: ../../../../application/forms/RepoForm.php:37
+#: ../../../../application/forms/RepoForm.php:42
+msgid "Error"
+msgstr "Ошибка"
+
+#: ../../../../configuration.php:13
+msgid "Excel lists"
+msgstr "Excel-списки"
+
+#: ../../../../application/controllers/PolitprisonersController.php:191
+msgid "February"
+msgstr "Февраль"
+
+#: ../../../../configuration.php:18
+msgid "Info. links"
+msgstr "Инфо. ссылки"
+
+#: ../../../../application/controllers/PolitprisonersController.php:189
+msgid "January"
+msgstr "Январь"
+
+#: ../../../../application/controllers/PolitprisonersController.php:201
+msgid "July"
+msgstr "Июль"
+
+#: ../../../../application/controllers/PolitprisonersController.php:199
+msgid "June"
+msgstr "Июнь"
+
+#: ../../../../application/views/scripts/politprisoners/all.phtml:27
+#: ../../../../application/views/scripts/politprisoners/bybirthmonth.phtml:15
+#: ../../../../application/views/scripts/politprisoners/view.phtml:26
+msgid "List"
+msgstr "Список"
+
+#: ../../../../application/controllers/PolitprisonersController.php:193
+msgid "March"
+msgstr "Март"
+
+#: ../../../../application/controllers/PolitprisonersController.php:197
+msgid "May"
+msgstr "Май"
+
+#: ../../../../application/views/scripts/politprisoners/bybirthday.phtml:12
+msgid "Month"
+msgstr "Месяц"
+
+#: ../../../../application/forms/BackendForm.php:29
+msgid "Must be a PostgreSQL one"
+msgstr "Требуется PostgreSQL"
+
+#: ../../../../application/forms/RepoForm.php:13
+#: ../../../../application/views/scripts/politprisoners/all.phtml:25
+#: ../../../../application/views/scripts/politprisoners/bybirthmonth.phtml:14
+#: ../../../../application/views/scripts/politprisoners/view.phtml:15
+msgid "Name"
+msgstr "Имя"
+
+#: ../../../../application/forms/ExcelListForm.php:21
+msgid "Name column"
+msgstr "Столбец с именем"
+
+#: ../../../../application/views/scripts/excellists/index.phtml:10
+#: ../../../../application/views/scripts/infolinks/index.phtml:10
+#: ../../../../library/Manufaktura_elfov/CrudController.php:32
+msgid "New"
+msgstr "Создать"
+
+#: ../../../../application/forms/AwarenessForm.php:21
+msgid "Not sure"
+msgstr "Затрудняюсь"
+
+#: ../../../../application/controllers/PolitprisonersController.php:209
+msgid "November"
+msgstr "Ноябрь"
+
+#: ../../../../application/forms/RepoForm.php:32
+#: ../../../../application/forms/RepoForm.php:37
+#: ../../../../application/forms/RepoForm.php:42
+msgid "OK"
+msgstr "Ок"
+
+#: ../../../../application/controllers/PolitprisonersController.php:207
+msgid "October"
+msgstr "Октябрь"
+
+#: ../../../../application/views/scripts/politprisoners/bybirthday.phtml:13
+msgid "People born"
+msgstr "Родилось людей"
+
+#: ../../../../configuration.php:21
+msgid "Polit. prisoners"
+msgstr "Политзэки"
+
+#: ../../../../application/views/scripts/politprisoners/all.phtml:14
+msgid "Random"
+msgstr "Случайный"
+
+#: ../../../../library/Manufaktura_elfov/CrudController.php:54
+msgid "Remove"
+msgstr "Удалить"
+
+#: ../../../../application/forms/AwarenessForm.php:15
+#: ../../../../application/forms/BackendForm.php:12
+#: ../../../../application/forms/RepoForm.php:17
+msgid "Save"
+msgstr "Сохранить"
+
+#: ../../../../application/forms/AwarenessForm.php:30
+msgid "Score"
+msgstr "Оценка"
+
+#: ../../../../application/controllers/PolitprisonersController.php:205
+msgid "September"
+msgstr "Сентябрь"
+
+#: ../../../../configuration.php:8
+msgid "Settings"
+msgstr "Настройки"
+
+#: ../../../../application/forms/ExcelListForm.php:12
+#: ../../../../application/forms/InfoLinkForm.php:12
+msgid "URL"
+msgstr "Ссылка"
+
+#: ../../../../application/controllers/PolitprisonersController.php:213
+msgid "Unknown"
+msgstr "Неизвестно"
