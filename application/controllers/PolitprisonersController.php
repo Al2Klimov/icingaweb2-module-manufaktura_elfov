@@ -4,6 +4,7 @@ namespace Icinga\Module\Manufaktura_elfov\Controllers;
 
 use DateTime;
 use Icinga\Exception\NotFoundError;
+use Icinga\Module\Manufaktura_elfov\CommonController;
 use Icinga\Module\Manufaktura_elfov\Db;
 use Icinga\Module\Manufaktura_elfov\ExcelLists;
 use Icinga\Module\Manufaktura_elfov\Forms\AwarenessForm;
@@ -15,6 +16,8 @@ use PDO;
 
 class PolitprisonersController extends Controller
 {
+    use CommonController;
+
     public function allAction(): void
     {
         $this->view->excelLists = ExcelLists::create()->select(['uuid', 'display_name'])->fetchPairs();
@@ -27,7 +30,7 @@ class PolitprisonersController extends Controller
 
         $query->execute();
         $query->setFetchMode(PDO::FETCH_OBJ);
-        $this->addTabByBirthday($this->addTabAll($this->mkTabs()))->activate('all');
+        $this->setupTabs($this->view, $this->addTabByBirthday($this->addTabAll(new Tabs)), 'all');
     }
 
     public function bybirthdayAction(): void
@@ -44,7 +47,7 @@ class PolitprisonersController extends Controller
             $row->month_name = $this->getMonthName($row->born_month);
         }
 
-        $this->addTabByBirthday($this->addTabAll($this->mkTabs()))->activate('bybirthday');
+        $this->setupTabs($this->view, $this->addTabByBirthday($this->addTabAll(new Tabs)), 'bybirthday');
     }
 
     public function bybirthmonthAction(): void
@@ -71,7 +74,7 @@ class PolitprisonersController extends Controller
 
         $query->execute(['born_month' => $month]);
         $query->setFetchMode(PDO::FETCH_OBJ);
-        $this->addTabByMonth($this->addTabByBirthday($this->mkTabs()), $month)->activate('bymonth');
+        $this->setupTabs($this->view, $this->addTabByMonth($this->addTabByBirthday(new Tabs), $month), 'bymonth');
     }
 
     public function viewAction(): void
@@ -133,7 +136,7 @@ class PolitprisonersController extends Controller
         $query->execute(['id' => $id, 'source' => $politPrisoner->source]);
         $query->setFetchMode(PDO::FETCH_OBJ);
 
-        $tabs = $this->mkTabs();
+        $tabs = new Tabs;
 
         switch ($this->getParam('from')) {
             case 'all':
@@ -148,9 +151,10 @@ class PolitprisonersController extends Controller
         $tabs->add('polit_prisoner', [
             'title' => preg_replace('~( \S)\S+~u', '\\1.', $politPrisoner->name),
             'icon' => 'user',
-            'url' => Url::fromRequest(),
-            'active' => true
+            'url' => Url::fromRequest()
         ]);
+
+        $this->setupTabs($this->view, $tabs, 'polit_prisoner');
     }
 
     public function awarenessAction(): void
@@ -212,11 +216,6 @@ class PolitprisonersController extends Controller
             default:
                 return $this->translate('Unknown');
         }
-    }
-
-    private function mkTabs(): Tabs
-    {
-        return $this->view->tabs = new Tabs;
     }
 
     private function addTabAll(Tabs $tabs): Tabs

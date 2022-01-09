@@ -7,6 +7,8 @@ use Icinga\Web\Controller;
 
 abstract class CrudController extends Controller
 {
+    use CommonController;
+
     abstract protected function getTab(): string;
 
     abstract protected function getRepo(): IniRepo;
@@ -18,7 +20,7 @@ abstract class CrudController extends Controller
         $this->assertPermission('config/modules');
 
         $this->view->items = $this->getRepo()->select(['uuid', 'display_name'])->order('display_name');
-        $this->view->tabs = $this->Module()->getConfigTabs()->activate($this->getTab());
+        $this->setupTabs($this->view, $this->Module()->getConfigTabs(), $this->getTab());
     }
 
     public function createAction(): void
