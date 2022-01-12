@@ -38,8 +38,8 @@ CREATE TABLE polit_prisoner_field
 
 CREATE TABLE polit_prisoner_attr
 (
-    polit_prisoner SMALLSERIAL,
-    field          SMALLSERIAL,
+    polit_prisoner SMALLINT,
+    field          SMALLINT,
     value          TEXT        NOT NULL,
     last_seen      TIMESTAMPTZ NOT NULL,
 
