@@ -47,3 +47,25 @@ CREATE TABLE polit_prisoner_attr
     CONSTRAINT polit_prisoner_attr_fk_polit_prisoner FOREIGN KEY (polit_prisoner) REFERENCES polit_prisoner (id),
     CONSTRAINT polit_prisoner_attr_fk_field FOREIGN KEY (field) REFERENCES polit_prisoner_field (id)
 );
+
+CREATE TABLE web_user
+(
+    id   SMALLSERIAL,
+    name VARCHAR(255) NOT NULL,
+
+    CONSTRAINT web_user_pk PRIMARY KEY (id),
+    CONSTRAINT web_user_uk_name UNIQUE (name)
+);
+
+CREATE TABLE polit_prisoner_awareness
+(
+    polit_prisoner SMALLINT,
+    edited         TIMESTAMPTZ,
+    editor         SMALLINT NOT NULL,
+    awareness      SMALLINT DEFAULT NULL,
+    comment        TEXT NOT NULL,
+
+    CONSTRAINT polit_prisoner_awareness_pk PRIMARY KEY (polit_prisoner, edited),
+    CONSTRAINT polit_prisoner_awareness_fk_polit_prisoner FOREIGN KEY (polit_prisoner) REFERENCES polit_prisoner (id),
+    CONSTRAINT polit_prisoner_awareness_fk_editor FOREIGN KEY (editor) REFERENCES web_user (id)
+);

@@ -1,5 +1,5 @@
 # manufaktura_elfov.
-# Copyright (C) 2021 TEAM NAME
+# Copyright (C) 2022 TEAM NAME
 # This file is distributed under the same license as Manufaktura_elfov Module.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manufaktura_elfov Module (0.0.0)\n"
 "Report-Msgid-Bugs-To: ISSUE TRACKER\n"
-"POT-Creation-Date: 2021-11-10 11:50+0000\n"
-"PO-Revision-Date: 2021-12-12 17:49+0100\n"
+"POT-Creation-Date: 2022-01-12 04:35+0000\n"
+"PO-Revision-Date: 2022-01-12 05:36+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Basepath: .\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: ../../../../application/forms/AwarenessForm.php:38
+#: ../../../../application/forms/AwarenessForm.php:40
 msgid "1 = John Doe, 10 = Alexey Navalny"
 msgstr "1 = Вася Пупкин, 10 = Алексей Навальный"
 
@@ -29,20 +29,21 @@ msgid "Add"
 msgstr "Добавить"
 
 #: ../../../../configuration.php:26
-#: ../../../../application/controllers/PolitprisonersController.php:225
+#: ../../../../application/controllers/PolitprisonersController.php:234
 msgid "All"
 msgstr "Все"
 
-#: ../../../../application/controllers/PolitprisonersController.php:195
+#: ../../../../application/controllers/PolitprisonersController.php:209
 msgid "April"
 msgstr "Апрель"
 
-#: ../../../../application/controllers/PolitprisonersController.php:203
+#: ../../../../application/controllers/PolitprisonersController.php:217
 msgid "August"
 msgstr "Август"
 
-#: ../../../../application/controllers/PolitprisonersController.php:182
+#: ../../../../application/controllers/PolitprisonersController.php:196
 #: ../../../../application/views/scripts/politprisoners/all.phtml:28
+#: ../../../../application/views/scripts/politprisoners/awareness.phtml:13
 #: ../../../../application/views/scripts/politprisoners/bybirthmonth.phtml:16
 #: ../../../../application/views/scripts/politprisoners/view.phtml:34
 msgid "Awareness score"
@@ -59,9 +60,14 @@ msgid "Born column"
 msgstr "Столбец с датой рождения"
 
 #: ../../../../configuration.php:32
-#: ../../../../application/controllers/PolitprisonersController.php:234
+#: ../../../../application/controllers/PolitprisonersController.php:243
 msgid "By birthday"
 msgstr "По дате рождения"
+
+#: ../../../../application/forms/AwarenessForm.php:45
+#: ../../../../application/views/scripts/politprisoners/awareness.phtml:14
+msgid "Comment"
+msgstr "Комментарий"
 
 #: ../../../../application/forms/RepoForm.php:22
 msgid "Confirm Removal"
@@ -71,7 +77,7 @@ msgstr "Подтвердить удаление"
 msgid "Database"
 msgstr "База данных"
 
-#: ../../../../application/controllers/PolitprisonersController.php:211
+#: ../../../../application/controllers/PolitprisonersController.php:225
 msgid "December"
 msgstr "Декабрь"
 
@@ -79,7 +85,7 @@ msgstr "Декабрь"
 msgid "Details"
 msgstr "Подробности"
 
-#: ../../../../library/Manufaktura_elfov/CrudController.php:43
+#: ../../../../library/Manufaktura_elfov/CrudController.php:45
 msgid "Edit"
 msgstr "Изменить"
 
@@ -93,7 +99,7 @@ msgstr "Ошибка"
 msgid "Excel lists"
 msgstr "Excel-списки"
 
-#: ../../../../application/controllers/PolitprisonersController.php:191
+#: ../../../../application/controllers/PolitprisonersController.php:205
 msgid "February"
 msgstr "Февраль"
 
@@ -101,15 +107,15 @@ msgstr "Февраль"
 msgid "Info. links"
 msgstr "Инфо. ссылки"
 
-#: ../../../../application/controllers/PolitprisonersController.php:189
+#: ../../../../application/controllers/PolitprisonersController.php:203
 msgid "January"
 msgstr "Январь"
 
-#: ../../../../application/controllers/PolitprisonersController.php:201
+#: ../../../../application/controllers/PolitprisonersController.php:215
 msgid "July"
 msgstr "Июль"
 
-#: ../../../../application/controllers/PolitprisonersController.php:199
+#: ../../../../application/controllers/PolitprisonersController.php:213
 msgid "June"
 msgstr "Июнь"
 
@@ -119,11 +125,11 @@ msgstr "Июнь"
 msgid "List"
 msgstr "Список"
 
-#: ../../../../application/controllers/PolitprisonersController.php:193
+#: ../../../../application/controllers/PolitprisonersController.php:207
 msgid "March"
 msgstr "Март"
 
-#: ../../../../application/controllers/PolitprisonersController.php:197
+#: ../../../../application/controllers/PolitprisonersController.php:211
 msgid "May"
 msgstr "Май"
 
@@ -148,15 +154,15 @@ msgstr "Столбец с именем"
 
 #: ../../../../application/views/scripts/excellists/index.phtml:10
 #: ../../../../application/views/scripts/infolinks/index.phtml:10
-#: ../../../../library/Manufaktura_elfov/CrudController.php:32
+#: ../../../../library/Manufaktura_elfov/CrudController.php:34
 msgid "New"
 msgstr "Создать"
 
-#: ../../../../application/forms/AwarenessForm.php:21
+#: ../../../../application/forms/AwarenessForm.php:23
 msgid "Not sure"
 msgstr "Затрудняюсь"
 
-#: ../../../../application/controllers/PolitprisonersController.php:209
+#: ../../../../application/controllers/PolitprisonersController.php:223
 msgid "November"
 msgstr "Ноябрь"
 
@@ -166,7 +172,7 @@ msgstr "Ноябрь"
 msgid "OK"
 msgstr "Ок"
 
-#: ../../../../application/controllers/PolitprisonersController.php:207
+#: ../../../../application/controllers/PolitprisonersController.php:221
 msgid "October"
 msgstr "Октябрь"
 
@@ -182,21 +188,21 @@ msgstr "Политзэки"
 msgid "Random"
 msgstr "Случайный"
 
-#: ../../../../library/Manufaktura_elfov/CrudController.php:54
+#: ../../../../library/Manufaktura_elfov/CrudController.php:56
 msgid "Remove"
 msgstr "Удалить"
 
-#: ../../../../application/forms/AwarenessForm.php:15
+#: ../../../../application/forms/AwarenessForm.php:17
 #: ../../../../application/forms/BackendForm.php:12
 #: ../../../../application/forms/RepoForm.php:17
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../../../../application/forms/AwarenessForm.php:30
+#: ../../../../application/forms/AwarenessForm.php:32
 msgid "Score"
 msgstr "Оценка"
 
-#: ../../../../application/controllers/PolitprisonersController.php:205
+#: ../../../../application/controllers/PolitprisonersController.php:219
 msgid "September"
 msgstr "Сентябрь"
 
@@ -209,6 +215,10 @@ msgstr "Настройки"
 msgid "URL"
 msgstr "Ссылка"
 
-#: ../../../../application/controllers/PolitprisonersController.php:213
+#: ../../../../application/controllers/PolitprisonersController.php:227
 msgid "Unknown"
 msgstr "Неизвестно"
+
+#: ../../../../application/views/scripts/politprisoners/awareness.phtml:12
+msgid "User"
+msgstr "Пользователь"

@@ -171,6 +171,7 @@ class PolitprisonersController extends Controller
         $query->execute(['id' => $politPrisoner]);
 
         $awareness = $query->fetch(PDO::FETCH_COLUMN);
+        $query = null;
 
         if ($awareness === false) {
             throw new NotFoundError('');
@@ -182,6 +183,15 @@ class PolitprisonersController extends Controller
             ->setRedirectUrl(Url::fromPath('manufaktura_elfov/politprisoners/view', ['id' => $politPrisoner]));
 
         $form->handleRequest();
+
+        $this->view->rows = $query = Db::getPdo()->prepare(
+            'SELECT ppa.edited, wu.name, ppa.awareness, ppa.comment'
+            . ' FROM polit_prisoner_awareness ppa INNER JOIN web_user wu ON wu.id=ppa.editor'
+            . ' WHERE ppa.polit_prisoner=:polit_prisoner ORDER BY ppa.edited DESC'
+        );
+
+        $query->execute(['polit_prisoner' => $politPrisoner]);
+        $query->setFetchMode(PDO::FETCH_OBJ);
 
         $this->view->title = $this->translate('Awareness score');
     }

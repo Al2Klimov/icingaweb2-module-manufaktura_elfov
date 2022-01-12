@@ -1,5 +1,30 @@
 <?php
 // SPDX-License-Identifier: AGPL-3.0-or-later
 /** @var \Icinga\Module\Manufaktura_elfov\Forms\AwarenessForm $form */
+/** @var PDOStatement $rows */
 ?>
-<div class="content"><?= $form ?></div>
+<div class="content">
+    <?= $form ?>
+    <?php if ($rows->rowCount()): ?>
+        <table class="common-table">
+            <thead>
+            <tr>
+                <th></th>
+                <th><?= $this->escape($this->translate('User')) ?></th>
+                <th><?= $this->escape($this->translate('Awareness score')) ?></th>
+                <th><?= $this->escape($this->translate('Comment')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($rows as $row): ?>
+                <tr>
+                    <td><?= $this->escape(strftime('%c', (new DateTime($row->edited))->getTimestamp())) ?></td>
+                    <td><?= $this->escape($row->name) ?></td>
+                    <td><?= $this->escape($row->awareness === null ? '?' : "$row->awareness / 10") ?></td>
+                    <td><?= nl2br($this->escape($row->comment), false) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>
