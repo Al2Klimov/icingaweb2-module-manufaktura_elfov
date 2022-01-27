@@ -1,7 +1,7 @@
 <?php
 // SPDX-License-Identifier: AGPL-3.0-or-later
 /** @var \Icinga\Web\Widget\Tabs $tabs */
-/** @var \Icinga\Module\Manufaktura_elfov\Forms\BackendForm $form */
+/** @var \Icinga\Web\Form[] $forms */
 ?>
 <div class="controls"><?= $tabs ?></div>
-<div class="content"><?= $form ?></div>
+<div class="content"><?= implode($forms) ?></div>

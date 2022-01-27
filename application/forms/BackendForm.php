@@ -9,6 +9,7 @@ class BackendForm extends ConfigForm
 {
     public function init(): void
     {
+        $this->setTitle($this->translate('Database'));
         $this->setSubmitLabel($this->translate('Save'));
     }
 

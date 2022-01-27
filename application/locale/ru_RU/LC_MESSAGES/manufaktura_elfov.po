@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manufaktura_elfov Module (0.0.0)\n"
 "Report-Msgid-Bugs-To: ISSUE TRACKER\n"
-"POT-Creation-Date: 2022-01-12 04:35+0000\n"
-"PO-Revision-Date: 2022-01-12 05:36+0100\n"
+"POT-Creation-Date: 2022-01-28 20:31+0000\n"
+"PO-Revision-Date: 2022-01-28 21:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -43,11 +43,15 @@ msgstr "Август"
 
 #: ../../../../application/controllers/PolitprisonersController.php:196
 #: ../../../../application/views/scripts/politprisoners/all.phtml:28
-#: ../../../../application/views/scripts/politprisoners/awareness.phtml:13
+#: ../../../../application/views/scripts/politprisoners/awareness.phtml:14
 #: ../../../../application/views/scripts/politprisoners/bybirthmonth.phtml:16
 #: ../../../../application/views/scripts/politprisoners/view.phtml:34
 msgid "Awareness score"
 msgstr "Оценка узнаваемости"
+
+#: ../../../../application/forms/NotificationsForm.php:23
+msgid "Birthday lead time"
+msgstr "Время выполнения до дня рождения"
 
 #: ../../../../application/views/scripts/politprisoners/all.phtml:26
 #: ../../../../application/views/scripts/politprisoners/bybirthmonth.phtml:13
@@ -65,7 +69,7 @@ msgid "By birthday"
 msgstr "По дате рождения"
 
 #: ../../../../application/forms/AwarenessForm.php:45
-#: ../../../../application/views/scripts/politprisoners/awareness.phtml:14
+#: ../../../../application/views/scripts/politprisoners/awareness.phtml:15
 msgid "Comment"
 msgstr "Комментарий"
 
@@ -73,7 +77,8 @@ msgstr "Комментарий"
 msgid "Confirm Removal"
 msgstr "Подтвердить удаление"
 
-#: ../../../../application/forms/BackendForm.php:28
+#: ../../../../application/forms/BackendForm.php:12
+#: ../../../../application/forms/BackendForm.php:29
 msgid "Database"
 msgstr "База данных"
 
@@ -102,6 +107,10 @@ msgstr "Excel-списки"
 #: ../../../../application/controllers/PolitprisonersController.php:205
 msgid "February"
 msgstr "Февраль"
+
+#: ../../../../application/forms/NotificationsForm.php:24
+msgid "In days"
+msgstr "В днях"
 
 #: ../../../../configuration.php:18
 msgid "Info. links"
@@ -137,7 +146,7 @@ msgstr "Май"
 msgid "Month"
 msgstr "Месяц"
 
-#: ../../../../application/forms/BackendForm.php:29
+#: ../../../../application/forms/BackendForm.php:30
 msgid "Must be a PostgreSQL one"
 msgstr "Требуется PostgreSQL"
 
@@ -161,6 +170,10 @@ msgstr "Создать"
 #: ../../../../application/forms/AwarenessForm.php:23
 msgid "Not sure"
 msgstr "Затрудняюсь"
+
+#: ../../../../application/forms/NotificationsForm.php:11
+msgid "Notifications"
+msgstr "Уведомления"
 
 #: ../../../../application/controllers/PolitprisonersController.php:223
 msgid "November"
@@ -188,12 +201,17 @@ msgstr "Политзэки"
 msgid "Random"
 msgstr "Случайный"
 
+#: ../../../../application/forms/NotificationsForm.php:18
+msgid "Recipient"
+msgstr "Получатель"
+
 #: ../../../../library/Manufaktura_elfov/CrudController.php:56
 msgid "Remove"
 msgstr "Удалить"
 
 #: ../../../../application/forms/AwarenessForm.php:17
-#: ../../../../application/forms/BackendForm.php:12
+#: ../../../../application/forms/BackendForm.php:13
+#: ../../../../application/forms/NotificationsForm.php:12
 #: ../../../../application/forms/RepoForm.php:17
 msgid "Save"
 msgstr "Сохранить"
@@ -219,6 +237,10 @@ msgstr "Ссылка"
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: ../../../../application/views/scripts/politprisoners/awareness.phtml:12
+#: ../../../../application/views/scripts/politprisoners/awareness.phtml:13
 msgid "User"
 msgstr "Пользователь"
+
+#: ../../../../application/forms/NotificationsForm.php:19
+msgid "eMail address"
+msgstr "Адрес электронной почты"

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 namespace Icinga\Module\Manufaktura_elfov\Clicommands;
 
+use DateInterval;
 use DateTime;
 use Icinga\Cli\Command;
 use Icinga\Data\Db\DbConnection;
@@ -9,10 +10,17 @@ use Icinga\Module\Manufaktura_elfov\Db;
 use Icinga\Module\Manufaktura_elfov\ExcelList;
 use Icinga\Module\Manufaktura_elfov\ExcelLists;
 use Icinga\Module\Manufaktura_elfov\PolitPrisoner;
+use PDO;
 
 class CronCommand extends Command
 {
     public function dailyAction(): void
+    {
+        $this->syncPolitPrisoners();
+        $this->notifyUpcomingBirthdays();
+    }
+
+    private function syncPolitPrisoners(): void
     {
         $now = (new DateTime)->format(DateTime::ISO8601);
         $sources = [];
@@ -38,7 +46,7 @@ class CronCommand extends Command
         }
 
         Db::tx(function (DbConnection $db) use ($now, $sources, $pps, &$fields) {
-            /** @var \PDO $pdo */
+            /** @var PDO $pdo */
             $pdo = $db->getDbAdapter()->getConnection();
 
             $stmt = $pdo->prepare(
@@ -107,5 +115,42 @@ class CronCommand extends Command
 
             $stmt = null;
         });
+    }
+
+    private function notifyUpcomingBirthdays(): void
+    {
+        $notifications = $this->Config()->getSection('notifications');
+
+        if (!($notifications->email && $notifications->birthday_leadtime)) {
+            return;
+        }
+
+        $birthday = new DateTime;
+        $days = (int)$notifications->birthday_leadtime;
+
+        if ($days > 0) {
+            $birthday->add(new DateInterval("P${days}D"));
+        } elseif ($days < 0) {
+            $days = 0 - $days;
+            $birthday->add(new DateInterval("P${days}D"));
+        }
+
+        $query = Db::getPdo()->prepare(
+            'SELECT name FROM polit_prisoner pp'
+            . ' WHERE born_month=:born_month AND born_dom=:born_dom'
+            . ' AND last_seen=(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source)'
+            . ' ORDER BY name'
+        );
+
+        $query->execute([
+            'born_month' => (int)$birthday->format('m'),
+            'born_dom' => (int)$birthday->format('d')
+        ]);
+
+        $query->setFetchMode(PDO::FETCH_COLUMN, 0);
+
+        foreach ($query as $name) {
+            mail($notifications->email, 'BIRTHDAY ' . $birthday->format('Y-m-d') . " $name", '');
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace Icinga\Module\Manufaktura_elfov\Controllers;
 
 use Icinga\Module\Manufaktura_elfov\CommonController;
 use Icinga\Module\Manufaktura_elfov\Forms\BackendForm;
+use Icinga\Module\Manufaktura_elfov\Forms\NotificationsForm;
 use Icinga\Web\Controller;
 
 class ConfigController extends Controller
@@ -14,10 +15,13 @@ class ConfigController extends Controller
     {
         $this->assertPermission('config/modules');
 
-        $form = new BackendForm;
-        $form->setIniConfig($this->Config())->handleRequest();
+        $backendForm = new BackendForm;
+        $notificationsForm = new NotificationsForm;
+
+        $backendForm->setIniConfig($this->Config())->handleRequest();
+        $notificationsForm->setIniConfig($this->Config())->handleRequest();
 
         $this->setupTabs($this->view, $this->Module()->getConfigTabs(), 'config');
-        $this->view->form = $form;
+        $this->view->forms = [$backendForm, $notificationsForm];
     }
 }
