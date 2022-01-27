@@ -63,46 +63,50 @@ EOF
             throw new RuntimeException(implode(PHP_EOL, $officeOutput));
         }
 
-        $csv = $this->iterCsv($tlfs->resolvePath('dl.csv'));
-        $csv->rewind();
+        $path = $tlfs->resolvePath('dl.csv');
 
-        if ($csv->valid()) {
-            $columns = array_flip($csv->current());
+        if (file_exists($path)) {
+            $csv = $this->iterCsv($path);
+            $csv->rewind();
 
-            if (isset($columns[$this->nameColumn])) {
-                $nameIndex = $columns[$this->nameColumn];
-                $bornIndex = $columns[$this->bornColumn] ?? null;
+            if ($csv->valid()) {
+                $columns = array_flip($csv->current());
 
-                $infoColumns = array_flip(array_diff(
-                    array_flip($columns), array_filter([$this->nameColumn, $this->bornColumn], 'strlen')
-                ));
+                if (isset($columns[$this->nameColumn])) {
+                    $nameIndex = $columns[$this->nameColumn];
+                    $bornIndex = $columns[$this->bornColumn] ?? null;
 
-                $csv->next();
+                    $infoColumns = array_flip(array_diff(
+                        array_flip($columns), array_filter([$this->nameColumn, $this->bornColumn], 'strlen')
+                    ));
 
-                foreach ($this->remaining($csv) as $row) {
-                    if (!isset($row[$nameIndex])) {
-                        continue;
-                    }
+                    $csv->next();
 
-                    $pp = new PolitPrisoner;
-                    $matches = [];
-
-                    $pp->name = $row[$nameIndex];
-                    $pp->source = $this->getUuid();
-
-                    if ($bornIndex !== null && isset($row[$bornIndex])) {
-                        if (preg_match('~^(\d+ \w+ \d+|\d+\.\d+\.\d+)~', $row[$bornIndex], $matches)) {
-                            $pp->born = new DateTime($matches[1]);
+                    foreach ($this->remaining($csv) as $row) {
+                        if (!isset($row[$nameIndex])) {
+                            continue;
                         }
-                    }
 
-                    foreach ($infoColumns as $column => $index) {
-                        if (isset($row[$index])) {
-                            $pp->info[$column] = $row[$index];
+                        $pp = new PolitPrisoner;
+                        $matches = [];
+
+                        $pp->name = $row[$nameIndex];
+                        $pp->source = $this->getUuid();
+
+                        if ($bornIndex !== null && isset($row[$bornIndex])) {
+                            if (preg_match('~^(\d+ \w+ \d+|\d+\.\d+\.\d+)~', $row[$bornIndex], $matches)) {
+                                $pp->born = new DateTime($matches[1]);
+                            }
                         }
-                    }
 
-                    yield $pp;
+                        foreach ($infoColumns as $column => $index) {
+                            if (isset($row[$index])) {
+                                $pp->info[$column] = $row[$index];
+                            }
+                        }
+
+                        yield $pp;
+                    }
                 }
             }
         }
