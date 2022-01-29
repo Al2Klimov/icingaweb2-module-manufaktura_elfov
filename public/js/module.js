@@ -26,7 +26,7 @@ window.onload = function () {
                 return;
             }
 
-            var tr = tbody.querySelectorAll('tr')
+            var tr = tbody.querySelectorAll('tr.random-target')
 
             if (tr.length < 1) {
                 return;

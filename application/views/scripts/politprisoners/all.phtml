@@ -30,7 +30,7 @@ use Icinga\Web\Url;
         </thead>
         <tbody>
         <?php foreach ($rows as $row): ?>
-            <tr data-base-target="_next" href="<?=
+            <tr<?= ($row->vanished ? '' : ' class="random-target"') ?> data-base-target="_next" href="<?=
             $this->href('manufaktura_elfov/politprisoners/view', ['from' => 'all', 'id' => $row->id])
             ?>">
                 <td<?= ($row->vanished ? ' class="vanished"' : '') ?>><?= $this->escape($row->name) ?></td>
