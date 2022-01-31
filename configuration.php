@@ -18,6 +18,11 @@ $this->provideConfigTab('infolinks', [
     'label' => $this->translate('Info. links')
 ]);
 
+$this->provideConfigTab('namepatterns', [
+    'url' => 'namepatterns',
+    'label' => $this->translate('Name patterns')
+]);
+
 $section = $this->menuSection(N_('Polit. prisoners'), [
     'icon' => 'users',
     'priority' => -1

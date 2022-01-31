@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manufaktura_elfov Module (0.0.0)\n"
 "Report-Msgid-Bugs-To: ISSUE TRACKER\n"
-"POT-Creation-Date: 2022-01-28 20:31+0000\n"
-"PO-Revision-Date: 2022-01-28 21:47+0100\n"
+"POT-Creation-Date: 2022-02-01 10:50+0000\n"
+"PO-Revision-Date: 2022-02-01 16:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -28,7 +28,7 @@ msgstr "1 = Вася Пупкин, 10 = Алексей Навальный"
 msgid "Add"
 msgstr "Добавить"
 
-#: ../../../../configuration.php:26
+#: ../../../../configuration.php:31
 #: ../../../../application/controllers/PolitprisonersController.php:234
 msgid "All"
 msgstr "Все"
@@ -63,7 +63,7 @@ msgstr "Дата рождения"
 msgid "Born column"
 msgstr "Столбец с датой рождения"
 
-#: ../../../../configuration.php:32
+#: ../../../../configuration.php:37
 #: ../../../../application/controllers/PolitprisonersController.php:243
 msgid "By birthday"
 msgstr "По дате рождения"
@@ -99,6 +99,14 @@ msgstr "Изменить"
 #: ../../../../application/forms/RepoForm.php:42
 msgid "Error"
 msgstr "Ошибка"
+
+#: ../../../../application/views/scripts/namepatterns/index.phtml:27
+msgid "Example input"
+msgstr "Пример ввода"
+
+#: ../../../../application/views/scripts/namepatterns/index.phtml:28
+msgid "Example output"
+msgstr "Пример вывода"
 
 #: ../../../../configuration.php:13
 msgid "Excel lists"
@@ -150,6 +158,10 @@ msgstr "Месяц"
 msgid "Must be a PostgreSQL one"
 msgstr "Требуется PostgreSQL"
 
+#: ../../../../application/views/scripts/namepatterns/index.phtml:39
+msgid "N/A"
+msgstr "Н/п"
+
 #: ../../../../application/forms/RepoForm.php:13
 #: ../../../../application/views/scripts/politprisoners/all.phtml:25
 #: ../../../../application/views/scripts/politprisoners/bybirthmonth.phtml:14
@@ -161,11 +173,20 @@ msgstr "Имя"
 msgid "Name column"
 msgstr "Столбец с именем"
 
+#: ../../../../configuration.php:23
+msgid "Name patterns"
+msgstr "Образчики имён"
+
 #: ../../../../application/views/scripts/excellists/index.phtml:10
 #: ../../../../application/views/scripts/infolinks/index.phtml:10
+#: ../../../../application/views/scripts/namepatterns/index.phtml:13
 #: ../../../../library/Manufaktura_elfov/CrudController.php:34
 msgid "New"
 msgstr "Создать"
+
+#: ../../../../application/views/scripts/namepatterns/index.phtml:86
+msgid "Not covered"
+msgstr "Не покрыты"
 
 #: ../../../../application/forms/AwarenessForm.php:23
 msgid "Not sure"
@@ -189,11 +210,15 @@ msgstr "Ок"
 msgid "October"
 msgstr "Октябрь"
 
+#: ../../../../application/forms/NamePatternForm.php:14
+msgid "Pattern"
+msgstr "Образчик"
+
 #: ../../../../application/views/scripts/politprisoners/bybirthday.phtml:13
 msgid "People born"
 msgstr "Родилось людей"
 
-#: ../../../../configuration.php:21
+#: ../../../../configuration.php:26
 msgid "Polit. prisoners"
 msgstr "Политзэки"
 
@@ -208,6 +233,10 @@ msgstr "Получатель"
 #: ../../../../library/Manufaktura_elfov/CrudController.php:56
 msgid "Remove"
 msgstr "Удалить"
+
+#: ../../../../application/forms/NamePatternForm.php:22
+msgid "Replacement"
+msgstr "Замена"
 
 #: ../../../../application/forms/AwarenessForm.php:17
 #: ../../../../application/forms/BackendForm.php:13

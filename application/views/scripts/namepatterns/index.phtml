@@ -1,0 +1,93 @@
+<?php
+// SPDX-License-Identifier: AGPL-3.0-or-later
+/** @var \Icinga\Web\View $this */
+/** @var \Icinga\Web\Widget\Tabs $tabs */
+/** @var \Icinga\Repository\RepositoryQuery $items */
+/** @var string[] $politPrisoners */
+
+$searches = [];
+?>
+<div class="controls"><?= $tabs ?></div>
+<div class="content">
+    <p><?= $this->qlink(
+            $this->translate('New'),
+            'manufaktura_elfov/namepatterns/create',
+            null,
+            [
+                'class' => 'button-link',
+                'icon' => 'plus',
+                'data-icinga-modal' => true,
+                'data-no-icinga-ajax' => true
+            ]
+        ) ?></p>
+    <table data-base-target="_next" class="common-table">
+        <thead>
+        <tr>
+            <th></th>
+            <th><?= $this->escape($this->translate('Example input')) ?></th>
+            <th><?= $this->escape($this->translate('Example output')) ?></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($items as $item): ?>
+            <tr data-base-target="_self" data-icinga-modal data-no-icinga-ajax href="<?=
+            $this->href('manufaktura_elfov/namepatterns/edit', ['uuid' => $item->uuid])
+            ?>">
+                <td><?= $this->escape($item->display_name) ?></td>
+                <?php
+                $exampleIn = $exampleOut = $this->translate('N/A');
+
+                foreach ($politPrisoners as $politPrisoner) {
+                    $count = 0;
+                    $replaced = preg_replace($item->search, $item->replace, $politPrisoner, -1, $count);
+
+                    if ($count) {
+                        $exampleIn = $politPrisoner;
+                        $exampleOut = $replaced;
+                        break;
+                    }
+                }
+
+                $searches[] = $item->search;
+                ?>
+                <td><?= $this->escape($exampleIn) ?></td>
+                <td><?= $this->escape($exampleOut) ?></td>
+                <td><?= $this->qlink(
+                        null,
+                        'manufaktura_elfov/namepatterns/remove',
+                        ['uuid' => $item->uuid],
+                        [
+                            'class' => 'button-link',
+                            'icon' => 'trash',
+                            'data-icinga-modal' => true,
+                            'data-no-icinga-ajax' => true
+                        ]
+                    ) ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php
+    $notMatched = [];
+
+    foreach ($politPrisoners as $politPrisoner) {
+        foreach ($searches as $search) {
+            if (preg_match($search, $politPrisoner)) {
+                continue 2;
+            }
+        }
+
+        $notMatched[] = $politPrisoner;
+    }
+
+    if ($notMatched):
+        ?>
+        <h2><?= $this->escape($this->translate('Not covered')) ?></h2>
+        <ul>
+            <?php foreach ($notMatched as $politPrisoner): ?>
+                <li><?= $this->escape($politPrisoner) ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>
