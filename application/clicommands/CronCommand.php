@@ -4,14 +4,18 @@ namespace Icinga\Module\Manufaktura_elfov\Clicommands;
 
 use DateInterval;
 use DateTime;
+use Icinga\Application\Config;
 use Icinga\Cli\Command;
 use Icinga\Data\Db\DbConnection;
+use Icinga\Data\ResourceFactory;
+use Icinga\Exception\ConfigurationError;
 use Icinga\Module\Manufaktura_elfov\Db;
 use Icinga\Module\Manufaktura_elfov\ExcelList;
 use Icinga\Module\Manufaktura_elfov\ExcelLists;
 use Icinga\Module\Manufaktura_elfov\NamePatterns;
 use Icinga\Module\Manufaktura_elfov\PolitPrisoner;
 use PDO;
+use PDOStatement;
 
 class CronCommand extends Command
 {
@@ -20,6 +24,7 @@ class CronCommand extends Command
         $this->syncPolitPrisoners();
         $this->notifyUpcomingBirthdays();
         $this->notifyNotPatternCovered();
+        $this->updateGt2db();
     }
 
     private function syncPolitPrisoners(): void
@@ -164,17 +169,9 @@ class CronCommand extends Command
             return;
         }
 
-        $politPrisoners = Db::getPdo()->prepare(
-            'SELECT name FROM polit_prisoner pp'
-            . ' WHERE last_seen=(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source) ORDER BY name'
-        );
-
-        $politPrisoners->execute();
-        $politPrisoners->setFetchMode(PDO::FETCH_COLUMN, 0);
-
         $searches = NamePatterns::create()->select(['search'])->fetchColumn();
 
-        foreach ($politPrisoners as $politPrisoner) {
+        foreach ($this->queryNotVanishedPolitPrisonerNames() as $politPrisoner) {
             foreach ($searches as $search) {
                 if (preg_match($search, $politPrisoner)) {
                     continue 2;
@@ -183,5 +180,48 @@ class CronCommand extends Command
 
             mail($notifications->email, "NOT PATTERN COVERED $politPrisoner", '');
         }
+    }
+
+    private function updateGt2db(): void
+    {
+        $resource = Config::module('manufaktura_elfov')->get('backend', 'gt2db');
+
+        if ($resource === null) {
+            throw new ConfigurationError('gt2db database not configured');
+        }
+
+        $searches = NamePatterns::create()->select(['search', 'replace'])->order('display_name')->fetchPairs();
+
+        /** @var PDO $pdo */
+        $pdo = ResourceFactory::create($resource)->getDbAdapter()->getConnection();
+
+        $stmt = $pdo->prepare(
+            'INSERT INTO keyword(keyword) VALUES (:keyword) ON CONFLICT ON CONSTRAINT keyword_uk_keyword DO NOTHING'
+        );
+
+        foreach ($this->queryNotVanishedPolitPrisonerNames() as $politPrisoner) {
+            foreach ($searches as $search => $replace) {
+                $count = 0;
+                $replaced = preg_replace($search, $replace, $politPrisoner, -1, $count);
+
+                if ($count) {
+                    $stmt->execute(['keyword' => $replaced]);
+                    continue 2;
+                }
+            }
+        }
+    }
+
+    private function queryNotVanishedPolitPrisonerNames(): PDOStatement
+    {
+        $politPrisoners = Db::getPdo()->prepare(
+            'SELECT name FROM polit_prisoner pp'
+            . ' WHERE last_seen=(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source) ORDER BY name'
+        );
+
+        $politPrisoners->execute();
+        $politPrisoners->setFetchMode(PDO::FETCH_COLUMN, 0);
+
+        return $politPrisoners;
     }
 }
