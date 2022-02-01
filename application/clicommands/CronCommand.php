@@ -9,6 +9,7 @@ use Icinga\Data\Db\DbConnection;
 use Icinga\Module\Manufaktura_elfov\Db;
 use Icinga\Module\Manufaktura_elfov\ExcelList;
 use Icinga\Module\Manufaktura_elfov\ExcelLists;
+use Icinga\Module\Manufaktura_elfov\NamePatterns;
 use Icinga\Module\Manufaktura_elfov\PolitPrisoner;
 use PDO;
 
@@ -18,6 +19,7 @@ class CronCommand extends Command
     {
         $this->syncPolitPrisoners();
         $this->notifyUpcomingBirthdays();
+        $this->notifyNotPatternCovered();
     }
 
     private function syncPolitPrisoners(): void
@@ -151,6 +153,35 @@ class CronCommand extends Command
 
         foreach ($query as $name) {
             mail($notifications->email, 'BIRTHDAY ' . $birthday->format('Y-m-d') . " $name", '');
+        }
+    }
+
+    private function notifyNotPatternCovered(): void
+    {
+        $notifications = $this->Config()->getSection('notifications');
+
+        if (!$notifications->email) {
+            return;
+        }
+
+        $politPrisoners = Db::getPdo()->prepare(
+            'SELECT name FROM polit_prisoner pp'
+            . ' WHERE last_seen=(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source) ORDER BY name'
+        );
+
+        $politPrisoners->execute();
+        $politPrisoners->setFetchMode(PDO::FETCH_COLUMN, 0);
+
+        $searches = NamePatterns::create()->select(['search'])->fetchColumn();
+
+        foreach ($politPrisoners as $politPrisoner) {
+            foreach ($searches as $search) {
+                if (preg_match($search, $politPrisoner)) {
+                    continue 2;
+                }
+            }
+
+            mail($notifications->email, "NOT PATTERN COVERED $politPrisoner", '');
         }
     }
 }
