@@ -9,7 +9,7 @@ class BackendForm extends ConfigForm
 {
     public function init(): void
     {
-        $this->setTitle($this->translate('Database'));
+        $this->setTitle($this->translate('Databases'));
         $this->setSubmitLabel($this->translate('Save'));
     }
 
@@ -27,6 +27,13 @@ class BackendForm extends ConfigForm
 
         $this->addElement('select', 'backend_resource', [
             'label' => $this->translate('Database'),
+            'description' => $this->translate('Must be a PostgreSQL one'),
+            'required' => true,
+            'multiOptions' => $postgres
+        ]);
+
+        $this->addElement('select', 'backend_gt2db', [
+            'label' => $this->translate('gt2db database'),
             'description' => $this->translate('Must be a PostgreSQL one'),
             'required' => true,
             'multiOptions' => $postgres

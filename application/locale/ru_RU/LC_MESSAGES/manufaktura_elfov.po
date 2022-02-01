@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Manufaktura_elfov Module (0.0.0)\n"
 "Report-Msgid-Bugs-To: ISSUE TRACKER\n"
-"POT-Creation-Date: 2022-02-01 10:50+0000\n"
-"PO-Revision-Date: 2022-02-01 16:09+0100\n"
+"POT-Creation-Date: 2022-02-01 15:12+0000\n"
+"PO-Revision-Date: 2022-02-01 16:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -77,10 +77,13 @@ msgstr "Комментарий"
 msgid "Confirm Removal"
 msgstr "Подтвердить удаление"
 
-#: ../../../../application/forms/BackendForm.php:12
 #: ../../../../application/forms/BackendForm.php:29
 msgid "Database"
 msgstr "База данных"
+
+#: ../../../../application/forms/BackendForm.php:12
+msgid "Databases"
+msgstr "Базы данных"
 
 #: ../../../../application/controllers/PolitprisonersController.php:225
 msgid "December"
@@ -155,6 +158,7 @@ msgid "Month"
 msgstr "Месяц"
 
 #: ../../../../application/forms/BackendForm.php:30
+#: ../../../../application/forms/BackendForm.php:37
 msgid "Must be a PostgreSQL one"
 msgstr "Требуется PostgreSQL"
 
@@ -273,3 +277,7 @@ msgstr "Пользователь"
 #: ../../../../application/forms/NotificationsForm.php:19
 msgid "eMail address"
 msgstr "Адрес электронной почты"
+
+#: ../../../../application/forms/BackendForm.php:36
+msgid "gt2db database"
+msgstr "База данных gt2db"
