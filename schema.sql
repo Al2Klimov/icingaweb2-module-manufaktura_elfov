@@ -10,7 +10,7 @@ CREATE TABLE polit_prisoner_source
 
 CREATE TABLE polit_prisoner
 (
-    id         SMALLSERIAL,
+    id         SERIAL,
     name       VARCHAR(255) NOT NULL,
     born       DATE,
     source     UUID         NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE polit_prisoner_field
 
 CREATE TABLE polit_prisoner_attr
 (
-    polit_prisoner SMALLINT,
+    polit_prisoner INT,
     field          SMALLINT,
     value          TEXT        NOT NULL,
     last_seen      TIMESTAMPTZ NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE web_user
 
 CREATE TABLE polit_prisoner_awareness
 (
-    polit_prisoner SMALLINT,
+    polit_prisoner INT,
     edited         TIMESTAMPTZ,
     editor         SMALLINT NOT NULL,
     awareness      SMALLINT DEFAULT NULL,
