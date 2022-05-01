@@ -70,6 +70,8 @@ class AwarenessForm extends Form
             $webUser = $stmt->fetchColumn();
             $stmt = null;
 
+            $pdo->exec("SELECT SETVAL('web_user_id_seq', MAX(id)) FROM web_user");
+
             $pdo->prepare(
                 'INSERT INTO polit_prisoner_awareness(polit_prisoner, edited, editor, awareness, comment)'
                 . ' VALUES (:polit_prisoner, :edited, :editor, :awareness, :comment)'
