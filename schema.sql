@@ -10,7 +10,7 @@ CREATE TABLE polit_prisoner_source
 
 CREATE TABLE polit_prisoner
 (
-    id         SMALLSERIAL,
+    id         SMALLINT,
     name       VARCHAR(255) NOT NULL,
     born       DATE,
     source     UUID         NOT NULL,
@@ -29,7 +29,7 @@ CREATE INDEX polit_prisoner_ix_birthday ON polit_prisoner (born_month, born_dom)
 
 CREATE TABLE polit_prisoner_field
 (
-    id   SMALLSERIAL,
+    id   SMALLINT,
     name VARCHAR(255) NOT NULL,
 
     CONSTRAINT polit_prisoner_field_pk PRIMARY KEY (id),
@@ -50,7 +50,7 @@ CREATE TABLE polit_prisoner_attr
 
 CREATE TABLE web_user
 (
-    id   SMALLSERIAL,
+    id   SMALLINT,
     name VARCHAR(255) NOT NULL,
 
     CONSTRAINT web_user_pk PRIMARY KEY (id),
