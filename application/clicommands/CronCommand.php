@@ -44,10 +44,6 @@ class CronCommand extends Command
             }
         }
 
-        if (empty($pps)) {
-            return;
-        }
-
         $fields = [];
 
         foreach ($pps as $pp) {
@@ -86,8 +82,6 @@ class CronCommand extends Command
                 unset($id);
 
                 $stmt = null;
-
-                $pdo->exec("SELECT SETVAL('polit_prisoner_field_id_seq', MAX(id)) FROM polit_prisoner_field");
             }
 
             $stmt = $pdo->prepare(
@@ -108,8 +102,6 @@ class CronCommand extends Command
             }
 
             $stmt = null;
-
-            $pdo->exec("SELECT SETVAL('polit_prisoner_id_seq', MAX(id)) FROM polit_prisoner");
 
             $stmt = $pdo->prepare(
                 'INSERT INTO polit_prisoner_attr(polit_prisoner, field, value, last_seen)'
