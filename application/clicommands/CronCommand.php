@@ -70,7 +70,8 @@ class CronCommand extends Command
 
             if (!empty($fields)) {
                 $stmt = $pdo->prepare(
-                    'INSERT INTO polit_prisoner_field(name) VALUES (:name)'
+                    'INSERT INTO polit_prisoner_field(id, name)'
+                    . ' VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM polit_prisoner_field), :name)'
                     . ' ON CONFLICT ON CONSTRAINT polit_prisoner_field_uk_name'
                     . ' DO UPDATE SET name=EXCLUDED.name RETURNING id'
                 );
@@ -85,7 +86,8 @@ class CronCommand extends Command
             }
 
             $stmt = $pdo->prepare(
-                'INSERT INTO polit_prisoner(name, born, source, last_seen) VALUES (:name, :born, :source, :last_seen)'
+                'INSERT INTO polit_prisoner(id, name, born, source, last_seen)'
+                . ' VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM polit_prisoner), :name, :born, :source, :last_seen)'
                 . ' ON CONFLICT ON CONSTRAINT polit_prisoner_uk_name'
                 . ' DO UPDATE SET born=EXCLUDED.born, source=EXCLUDED.source, last_seen=EXCLUDED.last_seen RETURNING id'
             );

@@ -62,7 +62,8 @@ class AwarenessForm extends Form
             ]);
 
             $stmt = $pdo->prepare(
-                'INSERT INTO web_user(name) VALUES (:name) ON CONFLICT ON CONSTRAINT web_user_uk_name'
+                'INSERT INTO web_user(id, name) VALUES ((SELECT COALESCE(MAX(id), 0) + 1 FROM web_user), :name)'
+                . ' ON CONFLICT ON CONSTRAINT web_user_uk_name'
                 . ' DO UPDATE SET name=EXCLUDED.name RETURNING id'
             );
 
