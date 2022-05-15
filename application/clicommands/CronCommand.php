@@ -148,7 +148,7 @@ class CronCommand extends Command
             'SELECT name FROM polit_prisoner pp'
             . ' WHERE born_month=:born_month AND born_dom=:born_dom'
             . ' AND last_seen=(SELECT last_import FROM polit_prisoner_source WHERE id=pp.source)'
-            . ' ORDER BY name'
+            . ' ORDER BY born_dom, name'
         );
 
         $query->execute([
