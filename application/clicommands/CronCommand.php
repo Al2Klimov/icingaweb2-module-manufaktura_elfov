@@ -160,6 +160,7 @@ class CronCommand extends Command
 
         foreach ($query as $name) {
             mail($notifications->email, 'BIRTHDAY ' . $birthday->format('Y-m-d') . " $name", '');
+            sleep(2);
         }
     }
 
